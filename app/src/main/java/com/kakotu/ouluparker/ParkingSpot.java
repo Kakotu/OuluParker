@@ -8,21 +8,14 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 class ParkingSpot {
-    //FIXME? id might not be necessary
-    private int id;
     private String name;
-    private LatLng latLng;
+    private String address;
     private int freeSpace;
     private int totalSpace;
 
-    public int getId() {
-        return id;
+    public String getAddress() {
+        return address;
     }
-
-    public LatLng getLatLng() {
-        return latLng;
-    }
-
 
     public String getName() {
         return name;
@@ -36,14 +29,19 @@ class ParkingSpot {
         return totalSpace;
     }
 
-    public ParkingSpot(int id, String name, LatLng latLng, int freeSpace, int totalSpace){
-        this.id = id;
+    public ParkingSpot(String name, String address, int freeSpace, int totalSpace){
         this.name = name;
-        this.latLng = latLng;
+        this.address = address;
         this.freeSpace = freeSpace;
         this.totalSpace = totalSpace;
     }
 
+    public ParkingSpot(ParkingSpot parkingSpot){
+        this.name = parkingSpot.getName();
+        this.address = parkingSpot.getAddress();
+        this.freeSpace = parkingSpot.getFreeSpace();
+        this.totalSpace = parkingSpot.getTotalSpace();
+    }
 
 
 }
