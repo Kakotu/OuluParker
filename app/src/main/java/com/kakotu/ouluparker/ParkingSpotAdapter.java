@@ -5,13 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 7.10.2017.
@@ -29,7 +26,7 @@ public class ParkingSpotAdapter extends ArrayAdapter<ParkingSpot>{
     private class ViewHolder {
         TextView spotName;
         TextView freeSpace;
-        TextView totalSpace;
+        TextView address;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -43,14 +40,14 @@ public class ParkingSpotAdapter extends ArrayAdapter<ParkingSpot>{
             holder = new ViewHolder();
             holder.spotName = (TextView) convertView.findViewById(R.id.textViewSpotName);
             holder.freeSpace = (TextView) convertView.findViewById(R.id.textViewFreeSpace);
-            holder.totalSpace = (TextView) convertView.findViewById(R.id.textViewTotalSpace);
+            holder.address = (TextView) convertView.findViewById(R.id.textViewAddress);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
         holder.spotName.setText(parkingSpot.getName());
         holder.freeSpace.setText("" + parkingSpot.getFreeSpace());
-        holder.totalSpace.setText("" + parkingSpot.getTotalSpace());
+        holder.address.setText("" + parkingSpot.getAddress());
 
         return convertView;
     }
