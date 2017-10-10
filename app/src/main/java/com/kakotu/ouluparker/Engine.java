@@ -92,8 +92,8 @@ class Engine {
         assert parkingSpot != null;
         String name = parkingSpot.getString("name");
         String address = parkingSpot.getString("address");
-        int totalspace = Integer.parseInt(parkingSpot.getString("totalspace"));
         int freeSpace = Integer.parseInt(parkingSpot.getString("freespace"));
+        int totalspace = Integer.parseInt(parkingSpot.getString("totalspace"));
 
         return new ParkingSpot(name, address, freeSpace, totalspace);
     }
