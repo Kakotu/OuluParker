@@ -2,6 +2,7 @@ package com.kakotu.ouluparker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,17 @@ public class ParkingSpotAdapter extends ArrayAdapter<ParkingSpot>{
         holder.spotName.setText(parkingSpot.getName());
         holder.freeSpace.setText("" + parkingSpot.getFreeSpace());
         holder.address.setText("" + parkingSpot.getAddress());
-
+        if (position % 2 == 1) {
+            convertView.setBackgroundColor(context.getColor(R.color.colorAccent));
+            holder.spotName.setTextColor(Color.WHITE);
+            holder.freeSpace.setTextColor(Color.WHITE);
+            holder.address.setTextColor(Color.WHITE);
+        } else {
+            convertView.setBackgroundColor(Color.WHITE);
+            holder.spotName.setTextColor(context.getColor(R.color.colorPrimary));
+            holder.freeSpace.setTextColor(context.getColor(R.color.colorPrimary));
+            holder.address.setTextColor(context.getColor(R.color.colorPrimary));
+        }
         return convertView;
     }
 
