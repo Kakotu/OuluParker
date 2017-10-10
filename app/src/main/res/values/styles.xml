@@ -4,8 +4,5 @@
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
-    <style name="ProgBar" parent="Base.Widget.AppCompat.ProgressBar">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
 
 </resources>

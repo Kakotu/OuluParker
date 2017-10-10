@@ -1,6 +1,7 @@
 package com.kakotu.ouluparker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +11,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class ParkingSpotListActivity extends Activity {
 
@@ -45,6 +41,14 @@ public class ParkingSpotListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), allParkingSpots.get(position).getName() + " clicked!",
                         Toast.LENGTH_SHORT).show();
+
+                Bundle args = new Bundle();
+                args.putDouble("lat", allParkingPlaces.get(position).getLat());
+                args.putDouble("lng", allParkingPlaces.get(position).getLng());
+
+                Intent intent = new Intent(ParkingSpotListActivity.this, MapsActivity.class);
+                intent.putExtra("latLng", args);
+                startActivity(intent);
             }
         });
 

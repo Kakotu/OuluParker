@@ -27,6 +27,7 @@ import static com.kakotu.ouluparker.R.id.map;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    CameraPosition cameraPosition;
     private final static int zoomLevelCity = 13;
     private final static int zoomLevelSpot = 16;
 
@@ -37,6 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Engine engine;
     ArrayList<ParkingPlace> allParkingPlaces;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +67,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new JsonFetchTask().execute();
             }
         });
+
+
+
+        Bundle args = getIntent().getBundleExtra("latLng");
+
+        if (args != null) {
+            LatLng lngLat = new LatLng(args.getDouble("lng"), args.getDouble("lat"));
+
+            cameraPosition = new CameraPosition.Builder()
+                    .target(lngLat)
+                    .zoom(zoomLevelSpot)
+                    .build();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(oulu)
-                .zoom(zoomLevelCity)
-                .build();
+        if (cameraPosition == null) {
+            cameraPosition = new CameraPosition.Builder()
+                    .target(oulu)
+                    .zoom(zoomLevelCity)
+                    .build();
+        }
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -87,7 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         new JsonFetchTask().execute();
 
