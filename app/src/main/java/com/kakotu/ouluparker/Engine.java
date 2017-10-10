@@ -2,6 +2,8 @@ package com.kakotu.ouluparker;
 
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,9 +80,22 @@ class Engine {
         }
     }
 
-    protected String getParkPlaceInfoById(String id){
+    protected ParkingSpot getParkPlaceInfoById(int id) throws JSONException {
+
         //Example link https://www.oulunliikenne.fi/public_traffic_api/parking/parking_details.php?parkingid=2
-        return parkPlaceFetcher.fetchParkData("https://www.oulunliikenne.fi/public_traffic_api/parking/parking_details.php?parkingid="+id);
+        JSONObject parkingSpot = null;
+        try {
+            parkingSpot = new JSONObject(parkPlaceFetcher.fetchParkData("https://www.oulunliikenne.fi/public_traffic_api/parking/parking_details.php?parkingid="+id));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        assert parkingSpot != null;
+        String name = parkingSpot.getString("name");
+        String address = parkingSpot.getString("address");
+        int totalspace = Integer.parseInt(parkingSpot.getString("totalspace"));
+        int freeSpace = Integer.parseInt(parkingSpot.getString("freeSpace"));
+
+        return new ParkingSpot(name, address, freeSpace, totalspace);
     }
 }
 

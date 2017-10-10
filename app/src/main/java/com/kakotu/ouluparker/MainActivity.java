@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 
     private class JsonFetchTask extends AsyncTask<Object, Object, int[]> {
         String data;
-        ArrayList<String> names = new ArrayList<>();
+        ParkingSpot spot;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
         protected int[] doInBackground(Object... objects) {
             try {
                 engine.getParkPlaces();
+                spot = new ParkingSpot(engine.getParkPlaceInfoById(2));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -56,6 +57,7 @@ public class MainActivity extends Activity {
                                 + engine.getAllParkingPlaces().get(i).getLng()+"\n"
                             +engine.getAllParkingPlaces().get(i).getId() + "\n"+ "\n");
                     }
+                    Log.d("onPostExecute", spot.getName());
 
 
                 }
