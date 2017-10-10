@@ -9,11 +9,14 @@ package com.kakotu.ouluparker;
 
 public class ParkingPlace {
 
-    public ParkingPlace(int id, double lat, double lng, String name) {
+    private final ParkingSpot spot;
+
+    public ParkingPlace(int id, double lat, double lng, String name, ParkingSpot spot) {
         this.id = id;
         this.lat = lat;
         this.lng = lng;
         this.name = name;
+        this.spot = spot;
     }
 
     public double getLat() {
@@ -59,5 +62,9 @@ public class ParkingPlace {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ParkingSpot getSpot() {
+        return spot;
     }
 }

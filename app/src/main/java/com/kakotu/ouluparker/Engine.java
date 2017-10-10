@@ -2,8 +2,6 @@ package com.kakotu.ouluparker;
 
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,8 +69,10 @@ class Engine {
                 double latitude =  Double.parseDouble(result[0]);
                 double longitude =  Double.parseDouble(result[1]);
 
+                ParkingSpot spot = getParkPlaceInfoById(id);
+
                 //Set parking places to Array
-                allParkingPlaces.add(new ParkingPlace(id, latitude, longitude, name));
+                allParkingPlaces.add(new ParkingPlace(id, latitude, longitude, name, spot));
             } catch (JSONException e) {
                 //Something went wrong
                 e.printStackTrace();
@@ -93,7 +93,7 @@ class Engine {
         String name = parkingSpot.getString("name");
         String address = parkingSpot.getString("address");
         int totalspace = Integer.parseInt(parkingSpot.getString("totalspace"));
-        int freeSpace = Integer.parseInt(parkingSpot.getString("freeSpace"));
+        int freeSpace = Integer.parseInt(parkingSpot.getString("freespace"));
 
         return new ParkingSpot(name, address, freeSpace, totalspace);
     }
@@ -112,7 +112,6 @@ class ParkPlaceFetcher {
             URL url = new URL(link);
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
-
 
             InputStream stream = connection.getInputStream();
 

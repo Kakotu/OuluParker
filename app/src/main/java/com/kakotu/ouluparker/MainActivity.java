@@ -6,11 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     Engine engine = new Engine();
@@ -38,6 +34,7 @@ public class MainActivity extends Activity {
             try {
                 engine.getParkPlaces();
                 spot = new ParkingSpot(engine.getParkPlaceInfoById(2));
+                Log.d("onPostExecute", spot.getName());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -57,7 +54,6 @@ public class MainActivity extends Activity {
                                 + engine.getAllParkingPlaces().get(i).getLng()+"\n"
                             +engine.getAllParkingPlaces().get(i).getId() + "\n"+ "\n");
                     }
-                    Log.d("onPostExecute", spot.getName());
 
 
                 }

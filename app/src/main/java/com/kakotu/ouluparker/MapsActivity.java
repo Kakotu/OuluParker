@@ -3,6 +3,7 @@ package com.kakotu.ouluparker;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 import static com.kakotu.ouluparker.R.id.map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -28,6 +31,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LatLng oulu = new LatLng(65.0123600, 25.4681600);
 
     private ImageButton buttonParkingPlaces;
+
+    Engine engine;
+    ArrayList<ParkingPlace> allParkingPlaces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +59,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Oulu and move the camera
-        mMap.addMarker(new MarkerOptions().position(oulu).title("Marker in Oulu"));
-
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(oulu)
                 .zoom(zoomLevelCity)
                 .build();
-
-        if (mMap != null) {
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -76,6 +75,61 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        new JsonFetchTask().execute();
+
+        // Add a marker in Oulu and move the camera
+        // mMap.addMarker(new MarkerOptions().position(oulu).title("Marker in Oulu"));
+
+    }
+
+
+    private class JsonFetchTask extends AsyncTask<Object, Object, int[]> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            engine = new Engine();
+        }
+
+        @Override
+        protected int[] doInBackground(Object... objects) {
+
+            try {
+                engine.getParkPlaces();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            allParkingPlaces = engine.getAllParkingPlaces();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(int[] ints) {
+            super.onPostExecute(ints);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (mMap != null) {
+                        for (int i = 0; i < allParkingPlaces.size(); i++) {
+                            String name = allParkingPlaces.get(i).getName();
+                            LatLng latLng = new LatLng(allParkingPlaces.get(i).getLng(), allParkingPlaces.get(i).getLat());
+                            int freeSpaces = allParkingPlaces.get(i).getSpot().getFreeSpace();
+
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(latLng)
+                                    .title(name)
+                                    .snippet("Vapaata: " + freeSpaces));
+                        }
+                    }
+
+                }
+            });
+        }
     }
 
 
