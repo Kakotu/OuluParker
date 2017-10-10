@@ -24,11 +24,11 @@ public class ParkingSpotListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_spot_list);
 
- /*       mockUpList.add(new ParkingSpot(0, "TestiParkki1", new LatLng(65.01027,25.472789), 10, 20));
-        mockUpList.add(new ParkingSpot(1, "TestiParkki2", new LatLng(65.01027,25.472789), 20, 30));
-        mockUpList.add(new ParkingSpot(2, "TestiParkki3", new LatLng(65.01027,25.472789), 30, 50));
-        mockUpList.add(new ParkingSpot(3, "TestiParkki4", new LatLng(65.01027,25.472789), 40, 60));
-*/
+        mockUpList.add(new ParkingSpot("TestiParkki1", "Testitie 1", 10, 20));
+        mockUpList.add(new ParkingSpot("TestiParkki2", "Testitie 2", 20, 30));
+        mockUpList.add(new ParkingSpot("TestiParkki3", "Testitie 3", 30, 50));
+        mockUpList.add(new ParkingSpot("TestiParkki4", "Testitie 4", 40, 60));
+
 
         parkingSpotList = (ListView) findViewById(R.id.parkingSpotList);
         //TODO Replace mockUpList with an actual list parsed from the json file
