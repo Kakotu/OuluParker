@@ -3,15 +3,15 @@ package com.kakotu.ouluparker;
 /**
  * OuluParker
  *
- * Created by Janne ( ͡° ͜ʖ ͡°) on 3.10.2017.
+ * Created by Janne on 3.10.2017.
  *
  */
 
-public class ParkingPlace {
+class ParkingPlace {
 
     private final ParkingSpot spot;
 
-    public ParkingPlace(int id, double lat, double lng, String name, ParkingSpot spot) {
+    ParkingPlace(int id, double lat, double lng, String name, ParkingSpot spot) {
         this.id = id;
         this.lat = lat;
         this.lng = lng;
@@ -19,25 +19,16 @@ public class ParkingPlace {
         this.spot = spot;
     }
 
-    public double getLat() {
+    double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
+    double getLng() {
         return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
     }
 
     private double lat, lng;
     private int id;
-    private String geom;
     private String name;
 
     public int getId() {
@@ -48,14 +39,6 @@ public class ParkingPlace {
         this.id = id;
     }
 
-    public String getGeom() {
-        return geom;
-    }
-
-    public void setGeom(String geom) {
-        this.geom = geom;
-    }
-
     public String getName() {
         return name;
     }
@@ -64,7 +47,7 @@ public class ParkingPlace {
         this.name = name;
     }
 
-    public ParkingSpot getSpot() {
+    ParkingSpot getSpot() {
         return spot;
     }
 }

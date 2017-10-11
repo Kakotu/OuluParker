@@ -1,8 +1,6 @@
 package com.kakotu.ouluparker;
 
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
  * Created by Administrator on 7.10.2017.
  */
@@ -13,7 +11,7 @@ class ParkingSpot {
     private int freeSpace;
     private int totalSpace;
 
-    public String getAddress() {
+    String getAddress() {
         return address;
     }
 
@@ -21,26 +19,19 @@ class ParkingSpot {
         return name;
     }
 
-    public int getFreeSpace() {
+    int getFreeSpace() {
         return freeSpace;
     }
 
-    public int getTotalSpace() {
+    private int getTotalSpace() {
         return totalSpace;
     }
 
-    public ParkingSpot(String name, String address, int freeSpace, int totalSpace){
+    ParkingSpot(String name, String address, int freeSpace, int totalSpace){
         this.name = name;
         this.address = address;
         this.freeSpace = freeSpace;
         this.totalSpace = totalSpace;
-    }
-
-    public ParkingSpot(ParkingSpot parkingSpot){
-        this.name = parkingSpot.getName();
-        this.address = parkingSpot.getAddress();
-        this.freeSpace = parkingSpot.getFreeSpace();
-        this.totalSpace = parkingSpot.getTotalSpace();
     }
 
 

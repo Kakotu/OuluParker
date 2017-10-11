@@ -15,12 +15,11 @@ import java.util.List;
  * Created by Administrator on 7.10.2017.
  */
 
-public class ParkingSpotAdapter extends ArrayAdapter<ParkingSpot>{
-    Context context;
+class ParkingSpotAdapter extends ArrayAdapter<ParkingSpot>{
+    private Context context;
 
-    public ParkingSpotAdapter(Context context, int resourceId, List<ParkingSpot> parkingSpots){
+    ParkingSpotAdapter(Context context, int resourceId, List<ParkingSpot> parkingSpots){
         super(context, resourceId, parkingSpots);
-        //Log.d(TAG, "constructor");
         this.context = context;
     }
 

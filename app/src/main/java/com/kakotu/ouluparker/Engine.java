@@ -33,7 +33,7 @@ class Engine {
         this.dataFetched = dataFetched;
     }
 
-    public ArrayList<ParkingPlace> getAllParkingPlaces() {
+    ArrayList<ParkingPlace> getAllParkingPlaces() {
         return allParkingPlaces;
     }
 
@@ -80,7 +80,7 @@ class Engine {
         }
     }
 
-    protected ParkingSpot getParkPlaceInfoById(int id) throws JSONException {
+    ParkingSpot getParkPlaceInfoById(int id) throws JSONException {
 
         //Example link https://www.oulunliikenne.fi/public_traffic_api/parking/parking_details.php?parkingid=2
         JSONObject parkingSpot = null;
@@ -106,7 +106,7 @@ class ParkPlaceFetcher {
     private String link = "";
 
 
-    public String fetchParkData(String link) {
+    String fetchParkData(String link) {
         Engine engine = new Engine();
         try {
             URL url = new URL(link);

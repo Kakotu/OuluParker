@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,7 +29,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     CameraPosition cameraPosition;
-    private final static int zoomLevelCity = 13;
+    private final static int zoomLevelCity = 14;
     private final static int zoomLevelSpot = 16;
 
     LatLng oulu = new LatLng(65.0123600, 25.4681600);
@@ -39,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Engine engine;
     ArrayList<ParkingPlace> allParkingPlaces;
 
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        new JsonFetchTask().execute();
         mMap = googleMap;
 
         if (cameraPosition == null) {
@@ -112,16 +115,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
 
-        new JsonFetchTask().execute();
+
 
     }
-
 
     private class JsonFetchTask extends AsyncTask<Object, Object, int[]> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            progressBar = (ProgressBar)findViewById(R.id.progressBar3);
+            progressBar.setVisibility(View.VISIBLE);
             engine = new Engine();
         }
 
@@ -145,7 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
+                    progressBar = (ProgressBar)findViewById(R.id.progressBar3);
+                    progressBar.setVisibility(View.INVISIBLE);
                     if (mMap != null) {
                         for (int i = 0; i < allParkingPlaces.size(); i++) {
                             String name = allParkingPlaces.get(i).getName();
@@ -155,7 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             MarkerOptions mapMarker = new MarkerOptions()
                                     .position(latLng)
                                     .title(name)
-                                    .snippet("Vapaata: " + freeSpaces);
+                                    .snippet(getString(R.string.vapaata) + freeSpaces);
 
                             if (freeSpaces == 0) {
                                 mapMarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
@@ -173,6 +177,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
         }
     }
-
-
 }

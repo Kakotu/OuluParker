@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OuluParker</string>
-    <string name="title_activity_maps" translatable="false">Map</string>
-    <string name="vapaata">Vapaata:</string>
+    <string name="google_maps_key" translatable="false"></string>
     <string name="nimi_ja_osoite">Nimi ja osoite</string>
     <string name="vapaat_paikat">Vapaat paikat</string>
-
+    <string name="vapaata">Vapaata:&#160;</string>
 </resources>

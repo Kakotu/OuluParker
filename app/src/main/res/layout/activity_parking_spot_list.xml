@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Nimi ja osoite"
+            android:text="@string/nimi_ja_osoite"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"/>
         <TextView
@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Vapaat paikat"
+            android:text="@string/vapaat_paikat"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"/>
     </LinearLayout>

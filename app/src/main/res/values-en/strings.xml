@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OuluParker</string>
+    <string name="nimi_ja_osoite">Place and address</string>
+    <string name="vapaat_paikat">Free spaces</string>
+    <string name="vapaata">Free:&#160;</string>
+</resources>
