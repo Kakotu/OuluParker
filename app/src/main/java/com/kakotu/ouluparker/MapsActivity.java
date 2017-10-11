@@ -70,10 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-
         Bundle args = getIntent().getBundleExtra("latLng");
-
         if (args != null) {
             LatLng lngLat = new LatLng(args.getDouble("lng"), args.getDouble("lat"));
 
@@ -103,20 +100,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
         mMap.setMyLocationEnabled(true);
+    }
 
-
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission granted!
+                } else {
+                    // permission denied!
+                }
+                return;
+            }
+        }
     }
 
     private class JsonFetchTask extends AsyncTask<Object, Object, int[]> {
@@ -130,15 +135,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         protected int[] doInBackground(Object... objects) {
-
             try {
                 engine.getParkPlaces();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             allParkingPlaces = engine.getAllParkingPlaces();
-
             return null;
         }
 
@@ -168,7 +170,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Color.colorToHSV(getColor(R.color.colorAccent), hsv);
                                 mapMarker.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
                             }
-
                             mMap.addMarker(mapMarker);
                         }
                     }
