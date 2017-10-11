@@ -38,9 +38,6 @@ public class ParkingSpotListActivity extends Activity {
         parkingSpotList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), allParkingSpots.get(position).getName() + " clicked!",
-                        Toast.LENGTH_SHORT).show();
-
                 Bundle args = new Bundle();
                 args.putDouble("lat", allParkingPlaces.get(position).getLat());
                 args.putDouble("lng", allParkingPlaces.get(position).getLng());
